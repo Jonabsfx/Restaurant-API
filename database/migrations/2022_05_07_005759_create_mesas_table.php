@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('mesas', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->integer('numero')->index()->unique();
             $table->timestamps();
         });
     }
