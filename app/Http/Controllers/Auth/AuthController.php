@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Resources\FuncionarioResource;
+use App\Http\Resources\EmployeeResource;
 
 class AuthController extends Controller
 {
@@ -22,8 +22,8 @@ class AuthController extends Controller
 
     public function me()
     {
-        $funcionario = auth()->user();
+        $employee = auth()->user();
 
-        return new FuncionarioResource($funcionario);
+        return new EmployeeResource($employee);
     }
 }

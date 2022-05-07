@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\ClienteController;
+use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\Auth\{
     AuthController,
     ResetPasswordController
@@ -11,26 +11,26 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * Autenticação
  */
-Route::post('/login-garcom', [GarcomAuthController::class, 'login']);
-Route::post('/login-cozinheiro', [CozinheiroAuthController::class, 'login']);
+Route::post('/login-waiter', [WaiterAuthController::class, 'login']);
+Route::post('/login-chef', [ChefAuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 
 /**
  * Resetar a Senha
  */
-Route::post('/esqueci-senha', [ResetPasswordController::class, 'sendResetLink'])->middleware('guest');
-Route::post('/resetar-senha', [ResetPasswordController::class, 'resetPassword'])->middleware('guest');
+Route::post('/esqueci-password', [ResetPasswordController::class, 'sendResetLink'])->middleware('guest');
+Route::post('/resetar-password', [ResetPasswordController::class, 'resetPassword'])->middleware('guest');
 
-Route::get('/lista-clientes', [ClienteController::class, 'index']);
+Route::get('/lista-customers', [CustomerController::class, 'index']);
 
 // Rotas do Garçcom
-Route::middleware(['auth:sanctum', 'type.garcom'])->group(function () {
+Route::middleware(['auth:sanctum', 'type.waiter'])->group(function () {
     
 });
 
-// Rotas do Cozinheiro
-Route::middleware(['auth:sanctum', 'type.cozinheiro'])->group(function () {
+// Rotas do Chef
+Route::middleware(['auth:sanctum', 'type.chef'])->group(function () {
     
 });
 

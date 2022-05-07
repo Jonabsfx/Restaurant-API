@@ -8,24 +8,24 @@ use App\Http\Requests\AuthRequest;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Cozinheiro;
+use App\Models\Chef;
 
-class CozinheiroAuthController extends AuthController
+class ChefAuthController extends AuthController
 {
     public function login(AuthRequest $request)
     {
 
-        $cozinheiro = Cozinheiro::were('login', $request->login)->first();
+        $chef = Chef::were('login', $request->login)->first();
 
-        if (!$cozinheiro ||!Hash::check($request->senha, $cozinheiro->snha)) {
+        if (!$chef ||!Hash::check($request->password, $chef->snha)) {
             throw ValidationException::withMessages([
-                'login' => ['Login ou senha incorretos'],
+                'login' => ['Login ou password incorretos'],
             ]);
         }
 
         return response()->json([
-            'cozinheiro' => $cozinheiro,
-            'token' => $cozinheiro->createToken($request->device_name, ['role:cozinheiro'])->plainTextToken
+            'chef' => $chef,
+            'token' => $chef->createToken($request->device_name, ['role:chef'])->plainTextToken
         ]);
     }
 }

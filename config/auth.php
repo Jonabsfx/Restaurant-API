@@ -47,9 +47,9 @@ return [
             'provider' => 'garcons',
         ],
     
-        'cozinheiros' => [
+        'chefs' => [
             'driver' => 'sanctum',
-            'provider' => 'cozinheiros',
+            'provider' => 'chefs',
         ],
     ],
 
@@ -78,12 +78,12 @@ return [
 
         'garcons' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Garcom::class,
+            'model' => App\Models\Waiter::class,
          ],
 
-        'cozinheiros' => [
+        'chefs' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Cozinheiro::class,
+            'model' => App\Models\Chef::class,
         ]
     ],
 

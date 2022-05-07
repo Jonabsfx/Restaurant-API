@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthRequest extends FormRequest
+class StoreCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,17 @@ class AuthRequest extends FormRequest
     public function rules()
     {
         return [
-            'login' => 'required',
-            'password' => 'required',
-            'device_name' => 'required',
+            'name' => 'required|max:255',
+            'cpf' => 'required|max:11'
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Nome do customer é obrigatório',
+            'cpf.required' => 'CPF é obrigatório'
+        ];
+        
     }
 }

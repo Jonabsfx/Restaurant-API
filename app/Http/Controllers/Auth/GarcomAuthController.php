@@ -8,24 +8,24 @@ use App\Http\Requests\AuthRequest;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Garcom;
+use App\Models\Waiter;
 
-class garcomAuthController extends AuthController
+class waiterAuthController extends AuthController
 {
     public function login(AuthRequest $request)
     {
 
-        $garcom = Garcom::were('login', $request->login)->first();
+        $waiter = Waiter::were('login', $request->login)->first();
 
-        if (!$garcom ||!Hash::check($request->senha, $garcom->snha)) {
+        if (!$waiter ||!Hash::check($request->password, $waiter->snha)) {
             throw ValidationException::withMessages([
-                'login' => ['Login ou senha incorretos'],
+                'login' => ['Login ou password incorretos'],
             ]);
         }
 
         return response()->json([
-            'garcom' => $garcom,
-            'token' => $garcom->createToken($request->device_name, ['role:garcom'])->plainTextToken
+            'waiter' => $waiter,
+            'token' => $waiter->createToken($request->device_name, ['role:waiter'])->plainTextToken
         ]);
     }
 }

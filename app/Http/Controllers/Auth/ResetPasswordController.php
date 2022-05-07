@@ -27,14 +27,14 @@ class ResetPasswordController extends Controller
         $request->validate([
             'token' => 'required',
             'login' => 'required|login',
-            'senha' => 'required|min:6|max:15',
+            'password' => 'required|min:6|max:15',
         ]);
 
         $status = Password::reset(
-            $request->only('login', 'senha', 'senha_confirmacao', 'token'),
+            $request->only('login', 'password', 'password_confirmacao', 'token'),
             function ($user, $password) {
                 $user->forceFill([
-                    'senha' => Hash::make($password)
+                    'password' => Hash::make($password)
                 ])->setRememberToken(Str::random(60));
 
                 $user->save();

@@ -46,9 +46,9 @@ class ResetPasswordNotification extends Notification
 
         return (new MailMessage)
                     ->subject('Nova Senha')
-                    ->line('Você está recebendo este e-mail porque recebemos um pedido de redefinição de senha para sua conta.')
+                    ->line('Você está recebendo este e-mail porque recebemos um order de redefinição de password para sua conta.')
                     ->action('Resetar Senha', $url)
-                    ->line('Se você não solicitou uma alteração da senha, nenhuma ação adicional é necessária.');
+                    ->line('Se você não solicitou uma alteração da password, nenhuma ação adicional é necessária.');
     }
 
     /**
