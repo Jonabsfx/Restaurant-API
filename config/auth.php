@@ -36,9 +36,20 @@ return [
     */
 
     'guards' => [
+        
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        
+        'garcons' => [
+            'driver' => 'sanctum',
+            'provider' => 'garcons',
+        ],
+    
+        'cozinheiros' => [
+            'driver' => 'sanctum',
+            'provider' => 'cozinheiros',
         ],
     ],
 
@@ -65,10 +76,15 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'garcons' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Garcom::class,
+         ],
+
+        'cozinheiros' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Cozinheiro::class,
+        ]
     ],
 
     /*

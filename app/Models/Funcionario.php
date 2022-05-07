@@ -16,10 +16,9 @@ class Funcionario extends Authenticatable
     protected $keyType = 'uuid';
 
     protected $fillable = [
-        'nome', 
-        'cargo', 
+        'nome',  
         'login', 
-        'senha'
+        'senha',
     ];
 
     protected $hidden = [
