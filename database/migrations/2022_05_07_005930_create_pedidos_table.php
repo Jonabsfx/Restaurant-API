@@ -14,7 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pedidos', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->date('data');
+            $table->enum('status', ['P', 'A', 'F'])->default('P');
+            /** P -> A fazer, A -> Em Andamento, F -> Finalizado */
+            $table->foreignUuid('funcionario_id')->nullable(false)->index();
+            $table->foreignUuid('mesa_id')->nullable(false)->index();
+            $table->foreignUuid('cliente_id')->nullable(false)->index();
             $table->timestamps();
         });
     }

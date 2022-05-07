@@ -14,7 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('funcionarios', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string('nome');
+            $table->enum('cargo', ['G', 'C']);
+            /** G -> Garçom, C -> Cozinheiro*/
+            $table->string('login')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
