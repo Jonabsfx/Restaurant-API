@@ -13,7 +13,8 @@ class Pedido extends Model
     protected $keyType = 'uuid';
 
     protected $fillable = [
-        'status'
+        'status',
+        'data',
     ];
 
     public function funcionario()
