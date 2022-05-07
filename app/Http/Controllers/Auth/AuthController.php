@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Auth;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\FuncionarioResource;
 
 class AuthController extends Controller
 {
@@ -21,8 +22,8 @@ class AuthController extends Controller
 
     public function me()
     {
-        $user = auth()->user();
+        $funcionario = auth()->user();
 
-        return new UserResource($user);
+        return new FuncionarioResource($funcionario);
     }
 }
