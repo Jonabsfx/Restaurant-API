@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTableRequest extends FormRequest
+class StoreMenuRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,19 +19,19 @@ class StoreTableRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules()
     {
         return [
-            'number' => 'required'
+            'name' => 'required|max:255',
         ];
     }
 
     public function messages()
     {
         return [
-            'number.required' => 'Número da mesa é obrigatório',
+            'name.required' => 'Nome do cardápio é obrigatório',
         ];
         
     }

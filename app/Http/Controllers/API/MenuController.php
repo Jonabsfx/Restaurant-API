@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMenuRequest;
 use App\Http\Resources\MenuResource;
-use Illuminate\Http\Request;
 use App\Repositories\MenuRepository;
+use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
@@ -26,14 +27,24 @@ class MenuController extends Controller
         return new MenuResource($this->repository->getMenu($id));
     }
 
-    public function create(Request $request)
+    public function create(StoreMenuRequest $request)
     {
          $menu = $this->repository
                          ->createNewMenu($request);
 
         return new MenuResource($menu);
     }
- 
+
+    public function update(StoreMenuRequest $request)
+    {
+        return MenuResource::collection($this->repository->update($request));
+    }
+
+    public function delete(StoreMenuRequest $request)
+    {
+        return MenuResource::collection($this->repository->delete($request));
+    }
+    
 
     
 }

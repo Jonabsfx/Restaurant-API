@@ -1,6 +1,13 @@
 <?php
 
-use App\Http\Controllers\API\CustomerController;
+use App\Http\Controllers\API\
+{
+    CustomerController,
+    MenuController,
+    EmployeeController,
+    OrderController,
+    TableController,
+};
 use App\Http\Controllers\Auth\{
     AuthController,
     ResetPasswordController
@@ -23,6 +30,15 @@ Route::post('/esqueci-password', [ResetPasswordController::class, 'sendResetLink
 Route::post('/resetar-password', [ResetPasswordController::class, 'resetPassword'])->middleware('guest');
 
 Route::get('/lista-customers', [CustomerController::class, 'index']);
+
+/**
+ * CRUD do Cardápio
+ */
+Route::get('/cardapios', [MenuController::class, 'index']);
+Route::post('/criacao-menu', [MenuController::class, 'create']);
+Route::get('/cardapio/{id_cardapio}', [MenuController::class, 'read']);
+Route::put('/cardapio/{id_cardapio}',[MenuController::class, 'update']);
+Route::delete('/cardapio/{id_cardapio]', [MenuController::class, 'delete']);
 
 // Rotas do Garçcom
 Route::middleware(['auth:sanctum', 'type.waiter'])->group(function () {

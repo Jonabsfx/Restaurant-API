@@ -32,7 +32,7 @@ class StoreCustomerRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Nome do customer é obrigatório',
+            'name.required' => 'Nome do cliente é obrigatório',
             'cpf.required' => 'CPF é obrigatório'
         ];
         
