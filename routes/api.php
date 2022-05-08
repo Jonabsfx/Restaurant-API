@@ -36,7 +36,7 @@ Route::get('/lista-customers', [CustomerController::class, 'index']);
  */
 Route::prefix('/cardapio')->group(function () {
     Route::get('/lista', [MenuController::class, 'index']);
-    Route::post('/criacao', [MenuController::class, 'create']);
+    Route::post('/cadastro', [MenuController::class, 'create']);
     Route::get('/{id_cardapio}/show', [MenuController::class, 'read']);
     Route::put('/{id_cardapio}/update',[MenuController::class, 'update']);
     Route::delete('/{id_cardapio]/delete', [MenuController::class, 'delete']);
@@ -48,7 +48,7 @@ Route::prefix('/cardapio')->group(function () {
 Route::prefix('/cliente')->group(function () {
 
     Route::get('/lista', [CustomerController::class, 'index']);
-    Route::post('/criacao', [MenuController::class, 'create']);
+    Route::post('/cadastro', [MenuController::class, 'create']);
     Route::get('/{id_cliente}/show', [MenuController::class, 'read']);
     Route::put('/{id_cliente}/update',[MenuController::class, 'update']);
     Route::delete('/{id_cliente}/delete', [MenuController::class, 'delete']);
@@ -60,11 +60,11 @@ Route::prefix('/cliente')->group(function () {
  */
 Route::prefix('/cliente/{id_cliente}')->group(function () {
 
-    Route::get('/getmaiorpedido', [OrderController::class, 'getBiggestOrder']);
-    Route::get('/getmenorpedido', [OrderController::class, 'getLowestOrder']);
-    Route::get('/getprimeiropedido', [OrderController::class, 'getFirstOrder']);
-    Route::get('/getultimopedido', [OrderController::class, 'getLastOrder']);
-    Route::get('/getallpedidoscliente', [OrderController::class, 'getAllClientOrders']);
+    Route::get('/maior-pedido', [OrderController::class, 'getBiggestOrder']);
+    Route::get('/menor-pedido', [OrderController::class, 'getLowestOrder']);
+    Route::get('/primeiro-pedido', [OrderController::class, 'getFirstOrder']);
+    Route::get('/ultimo-pedido', [OrderController::class, 'getLastOrder']);
+    Route::get('/lista-pedidos', [OrderController::class, 'getAllClientOrders']);
 
 });
 
