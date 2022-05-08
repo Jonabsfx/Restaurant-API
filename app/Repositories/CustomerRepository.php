@@ -43,6 +43,25 @@ class CustomerRepository
         }
     }
 
+    public function update(StoreCustomerRequest $request){
+
+        $customer = Customer::findOrFail($request->id); 
+        $customer->name = $request->name;
+        $customer->cpf = $request->cpf;
+
+        if(CustomerRepository::validaCPF($customer->cpf))
+            return response()->json($customer, 201);
+         else
+            return response()->json(400);   
+    }
+
+    public function delete($id)
+    {
+        $customer = Customer::findOrFail($id);
+        $customer->delete();
+        return response()->json(204);
+    }
+
     private function validaCPF($cpf) {
  
         // Extrai somente os números

@@ -34,7 +34,17 @@ class CustomerController extends Controller
 
         return new CustomerResource($customer);
     }
- 
+    
+
+    public function update(StoreCustomerRequest $request)
+    {
+        $this->repository->update($request);
+    }
+
+    public function delete(StoreCustomerRequest $request)
+    {
+        $this->repository->update($request->id);
+    }
 
     
 }

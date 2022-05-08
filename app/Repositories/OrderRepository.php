@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\StoreMenuRequest;
-use App\Models\Menu;
+use Illuminate\Http\Requests;
+use App\Models\Order;
 
 class MenuRepository
 {

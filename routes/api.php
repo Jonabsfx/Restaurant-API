@@ -34,11 +34,40 @@ Route::get('/lista-customers', [CustomerController::class, 'index']);
 /**
  * CRUD do Cardápio
  */
-Route::get('/cardapios', [MenuController::class, 'index']);
-Route::post('/criacao-menu', [MenuController::class, 'create']);
-Route::get('/cardapio/{id_cardapio}', [MenuController::class, 'read']);
-Route::put('/cardapio/{id_cardapio}',[MenuController::class, 'update']);
-Route::delete('/cardapio/{id_cardapio]', [MenuController::class, 'delete']);
+Route::prefix('/cardapio')->group(function () {
+    Route::get('/lista', [MenuController::class, 'index']);
+    Route::post('/criacao', [MenuController::class, 'create']);
+    Route::get('/{id_cardapio}/show', [MenuController::class, 'read']);
+    Route::put('/{id_cardapio}/update',[MenuController::class, 'update']);
+    Route::delete('/{id_cardapio]/delete', [MenuController::class, 'delete']);
+});
+
+/**
+ * CRUD do Cliente
+ */
+Route::prefix('/cliente')->group(function () {
+
+    Route::get('/lista', [CustomerController::class, 'index']);
+    Route::post('/criacao', [MenuController::class, 'create']);
+    Route::get('/{id_cliente}/show', [MenuController::class, 'read']);
+    Route::put('/{id_cliente}/update',[MenuController::class, 'update']);
+    Route::delete('/{id_cliente}/delete', [MenuController::class, 'delete']);
+
+});
+
+/**
+ * Métodos de Pedidos por CLiente
+ */
+Route::prefix('/cliente/{id_cliente}')->group(function () {
+
+    Route::get('/getmaiorpedido', [OrderController::class, 'getBiggestOrder']);
+    Route::get('/getmenorpedido', [OrderController::class, 'getLowestOrder']);
+    Route::get('/getprimeiropedido', [OrderController::class, 'getFirstOrder']);
+    Route::get('/getultimopedido', [OrderController::class, 'getLastOrder']);
+    Route::get('/getallpedidoscliente', [OrderController::class, 'getAllClientOrders']);
+
+});
+
 
 // Rotas do Garçcom
 Route::middleware(['auth:sanctum', 'type.waiter'])->group(function () {

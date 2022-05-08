@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('data');
             $table->enum('status', ['P', 'A', 'F'])->default('P');
             /** P -> A fazer, A -> Em Andamento, F -> Finalizado */
-            $table->foreignUuid('employee_id')->nullable(false)->index();
+            $table->foreignUuid('waiter_id')->nullable(false)->index();
             $table->foreignUuid('table_id')->nullable(false)->index();
             $table->foreignUuid('customer_id')->nullable(false)->index();
             $table->timestamps();

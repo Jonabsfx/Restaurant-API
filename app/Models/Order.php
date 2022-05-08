@@ -12,11 +12,13 @@ class Order extends Model
     public $incrementing = false;
     protected $keyType = 'uuid';
 
-    protected $fillable = [
-        'status',
-        'data',
-    ];
-
+    protected $fillable = 
+    [   
+        'waiter_id',
+        'table_id',
+        'customer_id',
+    ]; 
+    
     public function employee()
     {
         return $this->belongsTo(Employee::class);
