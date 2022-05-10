@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Waiter;
 
-class waiterAuthController extends AuthController
+class WaiterAuthController extends AuthController
 {
     public function login(AuthRequest $request)
     {
