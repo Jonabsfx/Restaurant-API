@@ -17,7 +17,9 @@ class ItenResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => ucwords(strtolower($this->name)),
+            'value' => $this->value,
             'menu' => MenuResource::collection($this->whenLoaded('menu')),
+            'orders' => OrderResource::collection($this->whenLoaded('orders')),
         ];
     }
 }

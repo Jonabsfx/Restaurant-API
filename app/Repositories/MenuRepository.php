@@ -16,12 +16,12 @@ class MenuRepository
 
     public function getAllMenus()
     {
-        return $this->entity->with('orders')->get();
+        return $this->entity->with('itens')->get();
     }
 
     public function getMenu(string $identify)
     {
-        return $this->entity->with('orders')->findOrFail($identify);
+        return $this->entity->with('itens')->findOrFail($identify);
     }
     
     public function createNewMenu(StoreMenuRequest $request)

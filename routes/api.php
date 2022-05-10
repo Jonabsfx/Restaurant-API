@@ -37,9 +37,33 @@ Route::get('/lista-customers', [CustomerController::class, 'index']);
 Route::prefix('/cardapio')->group(function () {
     Route::get('/lista', [MenuController::class, 'index']);
     Route::post('/cadastro', [MenuController::class, 'create']);
-    Route::get('/{id_cardapio}/show', [MenuController::class, 'read']);
-    Route::put('/{id_cardapio}/update',[MenuController::class, 'update']);
-    Route::delete('/{id_cardapio]/delete', [MenuController::class, 'delete']);
+    Route::get('/{id_menu}/show', [MenuController::class, 'read']);
+    Route::put('/{id_menu}/update',[MenuController::class, 'update']);
+    Route::delete('/{id_menu]/delete', [MenuController::class, 'delete']);
+});
+
+/**
+ * CRUD dos Itens
+ */
+Route::prefix('/cardapio/{id_menu}')->group(function () {
+    Route::post('/cadastro', [ItenController::class, 'create']);
+    Route::get('/lista', [ItenController::class, 'read']);
+    Route::put('/{id_iten}/update',[MenuController::class, 'update']);
+    Route::delete('/{id_iten]/delete', [MenuController::class, 'delete']);
+});
+
+/**
+ * CRUD da Mesa
+ */
+Route::prefix('/table')->group(function () {
+
+    Route::get('/lista', [TableController::class, 'index']);
+    Route::post('/cadastro', [TableController::class, 'create']);
+    Route::get('/{id_table}/show', [TableController::class, 'read']);
+    Route::put('/{id_table}/update',[TableController::class, 'update']);
+    Route::delete('/{id_table}/delete', [TableController::class, 'delete']);
+    Route::get('/{id_table}/list-pedidos', [OrderController::class, 'getAllPerTable']);
+
 });
 
 /**
@@ -48,17 +72,17 @@ Route::prefix('/cardapio')->group(function () {
 Route::prefix('/cliente')->group(function () {
 
     Route::get('/lista', [CustomerController::class, 'index']);
-    Route::post('/cadastro', [MenuController::class, 'create']);
-    Route::get('/{id_cliente}/show', [MenuController::class, 'read']);
-    Route::put('/{id_cliente}/update',[MenuController::class, 'update']);
-    Route::delete('/{id_cliente}/delete', [MenuController::class, 'delete']);
+    Route::post('/cadastro', [CustomerController::class, 'create']);
+    Route::get('/{id_customer}/show', [CustomerController::class, 'read']);
+    Route::put('/{id_customer}/update',[CustomerController::class, 'update']);
+    Route::delete('/{id_customer}/delete', [CustomerController::class, 'delete']);
 
 });
 
 /**
  * Métodos de Pedidos por Cliente
  */
-Route::prefix('/cliente/{id_cliente}')->group(function () {
+Route::prefix('/cliente/{id_customer}')->group(function () {
 
     Route::get('/maior-pedido', [OrderController::class, 'getBiggestOrder']);
     Route::get('/menor-pedido', [OrderController::class, 'getSmallestOrder']);
@@ -74,12 +98,6 @@ Route::prefix('/cliente/{id_cliente}')->group(function () {
 Route::get('/pedidos/lista-mes/{year}/{month}', [OrderController::class, 'getAllPerMonth']);
 Route::get('/pedidos/lista-dia/{year}/{month}/{day}', [OrderController::class, 'getAllPerDay']);
 Route::get('/pedidos/lista-semana/{year}/{month}/{day}', [OrderController::class, 'getAllPerWeek']);
-
-/***
- * Métodos de Pedidos por Mesa
- */
-
-Route::get('/pedidos/lista-mesa/{id_table}', [OrderController::class, 'getAllPerTable']);
 
 // Rotas do Garçcom
 Route::middleware(['auth:sanctum', 'type.waiter'])->group(function () {

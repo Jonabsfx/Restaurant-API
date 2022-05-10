@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('itens', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->integer('value');
+            $table->decimal('value');
             $table->foreignUuid('menu_id')->nullable(false)->index();
             $table->timestamps();
         });
