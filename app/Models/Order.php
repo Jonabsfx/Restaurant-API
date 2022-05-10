@@ -36,6 +36,6 @@ class Order extends Model
 
     public function itens()
     {
-        return $this->hasMany(Iten::class);
+        return $this->belongsToMany(Iten::class);
     }
 }

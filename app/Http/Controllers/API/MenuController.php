@@ -42,7 +42,7 @@ class MenuController extends Controller
 
     public function delete(StoreMenuRequest $request)
     {
-        $this->repository->update($request->id);
+        $this->repository->delete($request->id);
     }
     
 

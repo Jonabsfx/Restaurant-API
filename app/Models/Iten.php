@@ -14,6 +14,7 @@ class Iten extends Model
 
     protected $fillable = [
         'name',
+        'value',
     ];
 
     public function menu()
@@ -21,8 +22,8 @@ class Iten extends Model
         return $this->belongsTo(Menu::class);
     }
 
-    public function order()
+    public function orders()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsToMany(Order::class);
     }
 }

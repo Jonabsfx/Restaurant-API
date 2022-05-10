@@ -17,8 +17,7 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'status' => $this->status,
-            'data' => $this->data,
-            'employee' => EmployeeResource::collection($this->whenLoaded('employee')),
+            'waiter' => WaiterResource::collection($this->whenLoaded('waiter')),
             'customer' => CustomerResource::collection($this->whenLoaded('customer')),
             'table' => TableResource::collection($this->whenLoaded('table')),
             'itens' => ItenResource::collection($this->whenLoaded('itens')),

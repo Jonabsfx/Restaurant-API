@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('login')->unique();
-            $table->timestamp('login_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+        Schema::create('iten_order', function(Blueprint $table){
+            $table->id();
+            $table->foreignUuid('iten_id')->nullable(false)->constrained('itens')->index();
+            $table->foreignUuid('order_id')->nullable(false)->constrained('orders')->index();
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('iten_order');
     }
 };

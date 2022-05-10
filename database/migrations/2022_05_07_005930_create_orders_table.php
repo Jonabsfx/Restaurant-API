@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->date('data');
             $table->enum('status', ['P', 'A', 'F'])->default('P');
             /** P -> A fazer, A -> Em Andamento, F -> Finalizado */
             $table->foreignUuid('waiter_id')->nullable(false)->index();
             $table->foreignUuid('table_id')->nullable(false)->index();
             $table->foreignUuid('customer_id')->nullable(false)->index();
+            $table->integer('total')->default(0);
             $table->timestamps();
         });
     }
