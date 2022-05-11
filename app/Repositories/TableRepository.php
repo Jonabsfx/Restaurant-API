@@ -32,4 +32,21 @@ class TableRepository
         return response()->json($table, 201);
     }
 
+    public function update(StoreTableRequest $request){
+
+        $table = Table::findOrFail($request->id); 
+        $table->name = $request->name;
+        $table->save();
+
+        return response()->json($table, 201);
+    }
+
+    public function delete($id)
+    {
+        $table = Table::findOrFail($id);
+        $result = $table->delete();
+
+        return response()->json($result, 200);
+    }
+
 }

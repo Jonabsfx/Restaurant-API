@@ -10,14 +10,17 @@ use App\Http\Requests\
     StoreCustomerRequest,
     StoreTableRequest,
 };
-use DateTime;
+use App\Repositories\OrderRepository;
 
 class OrderController extends Controller
 {   
 
-    public function index()
+    protected $repository;
+
+
+    public function __construct(OrderRepository $orderRepository)
     {
-        return OrderResource::collection($this->repository->getAllMenus());
+        $this->repository = $orderRepository;
     }
 
     public function create(StoreOrderRequest $request)
@@ -32,83 +35,83 @@ class OrderController extends Controller
 
     public function update(StoreOrderRequest $request)
     {
-        $this->repository->update($request);
+       return OrderResource::collection($this->repository->update($request));
     }
 
     public function delete(StoreOrderRequest $request)
     {
-        $this->repository->delete($request->id);
+        return $this->repository->delete($request->id);
     }
 
     public function getAllPerTable(StoreTableRequest $request)
     {
-        $this->repository->getAllPerTable($request->id);
+        return OrderResource::collection($this->repository->getAllPerTable($request->id));
     }
 
     public function getAllPerEmployee()
     {
-        $this->repository->getAllPerEmployee();
+        return OrderResource::collection($this->repository->getAllPerEmployee());
     }
 
     public function getAllOnGoing()
     {
-        $this->repository->getAllOnGoing();
+        return OrderResource::collection($this->repository->getAllOnGoing());
     }
 
     public function getAllToDo()
     {
-        $this->repository->getAllToDo();
+        return OrderResource::collection($this->repository->getAllToDo());
     }
 
     public function getBiggestOrder(StoreCustomerRequest $request)
     {
-        $this->repository->getBiggestOrder($request->id);
+        return OrderResource::collection($this->repository->getBiggestOrder($request->id));
     }
 
     public function getSmallestOrder(StoreCustomerRequest $request)
     {
-        $this->repository->getSmallestOrder($request->id);
+        return OrderResource::collection($this->repository->getSmallestOrder($request->id));
     }
 
     public function getFirstOrder(StoreCustomerRequest $request)
     {
-        $this->repository->getFirstOrder($request->id);
+        return OrderResource::collection($this->repository->getFirstOrder($request->id));
     }
 
     public function getLastOrder(StoreCustomerRequest $request)
     {
-        $this->repository->getLastOrder($request->id);
+        return OrderResource::collection($this->repository->getLastOrder($request->id));
     }
 
     public function getAllPerCustomer(StoreCustomerRequest $request)
     {
-        $this->repository->getAllPerCustomer($request->id);
+        return OrderResource::collection($this->repository->getAllPerCustomer($request->id));
     }
 
     public function getAllPerDay(int $year, int $month, int $day)
     {
 
-        $this->repository->getAllPerDay($year, $month, $day);
+        return OrderResource::collection($this->repository->getAllPerDay($year, $month, $day));
     }
 
     public function getAllPerMonth(int $year, int $month)
     {
-        $this->repository->getAllPerMonth($year, $month);
+        return OrderResource::collection($this->repository->getAllPerMonth($year, $month));
     }
 
     public function getAllPerWeek(int $year, int $month, int $day)
     {
-        $this->repository->getAllPerWeek($year, $month, $day);
+        return OrderResource::collection($this->repository->getAllPerWeek($year, $month, $day));
     }
 
     public function start(StoreOrderRequest $request)
     {
-        $this->repository->start($request->id);
+        return OrderResource::collection($this->repository->start($request->id));
     }
     
     public function finish(StoreOrderRequest $request)
     {
-        $this->repository->finish($request->id);
+        return OrderResource::collection($this->repository->finish($request->id));
     }
 }
 

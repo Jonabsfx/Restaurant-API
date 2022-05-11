@@ -16,7 +16,7 @@ class WaiterFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'login' => $this->faker->unique()->login(),
+            'login' => $this->faker->unique()->safeEmail(),
             'password' => '1918',
         ];
     }

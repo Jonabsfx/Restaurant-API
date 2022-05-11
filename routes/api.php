@@ -4,13 +4,15 @@ use App\Http\Controllers\API\
 {
     CustomerController,
     MenuController,
-    EmployeeController,
     OrderController,
     TableController,
+    ItenController
 };
 use App\Http\Controllers\Auth\{
     AuthController,
-    ResetPasswordController
+    ResetPasswordController,
+    ChefAuthController,
+    WaiterAuthController,
 };
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -37,19 +39,19 @@ Route::get('/lista-customers', [CustomerController::class, 'index']);
 Route::prefix('/cardapio')->group(function () {
     Route::get('/lista', [MenuController::class, 'index']);
     Route::post('/cadastro', [MenuController::class, 'create']);
-    Route::get('/{id_menu}/show', [MenuController::class, 'read']);
-    Route::put('/{id_menu}/update',[MenuController::class, 'update']);
-    Route::delete('/{id_menu]/delete', [MenuController::class, 'delete']);
+    Route::get('/{menu_id}/show', [MenuController::class, 'read']);
+    Route::put('/{menu_id}/update',[MenuController::class, 'update']);
+    Route::delete('/{menu_id]/delete', [MenuController::class, 'delete']);
 });
 
 /**
  * CRUD dos Itens
  */
-Route::prefix('/cardapio/{id_menu}')->group(function () {
-    Route::post('/cadastro', [ItenController::class, 'create']);
-    Route::get('/lista', [ItenController::class, 'read']);
-    Route::put('/{id_iten}/update',[MenuController::class, 'update']);
-    Route::delete('/{id_iten]/delete', [MenuController::class, 'delete']);
+Route::prefix('/cardapio/{menu_id}')->group(function () {
+    Route::post('/cadastro-item', [ItenController::class, 'create']);
+    Route::get('/lista-itens', [ItenController::class, 'read']);
+    Route::put('/{iten_id}/update-item',[ItenController::class, 'update']);
+    Route::delete('/{iten_id}/deletar-item', [ItenController::class, 'delete']);
 });
 
 /**
@@ -59,10 +61,10 @@ Route::prefix('/table')->group(function () {
 
     Route::get('/lista', [TableController::class, 'index']);
     Route::post('/cadastro', [TableController::class, 'create']);
-    Route::get('/{id_table}/show', [TableController::class, 'read']);
-    Route::put('/{id_table}/update',[TableController::class, 'update']);
-    Route::delete('/{id_table}/delete', [TableController::class, 'delete']);
-    Route::get('/{id_table}/list-pedidos', [OrderController::class, 'getAllPerTable']);
+    Route::get('/{table_id}/show', [TableController::class, 'read']);
+    Route::put('/{table_id}/update',[TableController::class, 'update']);
+    Route::delete('/{table_id}/delete', [TableController::class, 'delete']);
+    Route::get('/{table_id}/lista-pedidos', [OrderController::class, 'getAllPerTable']);
 
 });
 
@@ -73,16 +75,16 @@ Route::prefix('/cliente')->group(function () {
 
     Route::get('/lista', [CustomerController::class, 'index']);
     Route::post('/cadastro', [CustomerController::class, 'create']);
-    Route::get('/{id_customer}/show', [CustomerController::class, 'read']);
-    Route::put('/{id_customer}/update',[CustomerController::class, 'update']);
-    Route::delete('/{id_customer}/delete', [CustomerController::class, 'delete']);
+    Route::get('/{customer_id}/show', [CustomerController::class, 'read']);
+    Route::put('/{customer_id}/update',[CustomerController::class, 'update']);
+    Route::delete('/{customer_id}/delete', [CustomerController::class, 'delete']);
 
 });
 
 /**
  * Métodos de Pedidos por Cliente
  */
-Route::prefix('/cliente/{id_customer}')->group(function () {
+Route::prefix('/cliente/{customer_id}')->group(function () {
 
     Route::get('/maior-pedido', [OrderController::class, 'getBiggestOrder']);
     Route::get('/menor-pedido', [OrderController::class, 'getSmallestOrder']);
@@ -112,8 +114,8 @@ Route::middleware(['auth:sanctum', 'type.chef'])->group(function () {
     Route::get('lista-pedidos',[OrderController::class, 'getAllPerEmployee']);
     Route::get('lista-em-andamento', [OrderController::class, 'getAllOnGoing']);
     Route::get('lista-a-fazer', [OrderController::class, 'getAllToDo']);
-    Route::post('/{id_order}/iniciar-pedido', [OrderController::class, 'start']);
-    Route::post('/{id_order}/finalizar-pedido', [OrderController::class, 'finish']);
+    Route::post('/{order_id}/iniciar-pedido', [OrderController::class, 'start']);
+    Route::post('/{order_id}/finalizar-pedido', [OrderController::class, 'finish']);
     
 });
 

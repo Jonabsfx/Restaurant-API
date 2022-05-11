@@ -30,10 +30,10 @@ class OrderRepository
         return response()->json($order, 201);
     }
 
-    public function addIten($id_order, $id_iten)
+    public function addIten($order_id, $iten_id)
     {
-        $iten = Iten::findOrFail($id_iten);
-        $order = Order::findOrFail($id_order);
+        $iten = Iten::findOrFail($iten_id);
+        $order = Order::findOrFail($order_id);
 
         $result = $order->itens()->save($iten);
 
@@ -42,10 +42,10 @@ class OrderRepository
         return response()->json($result, 201);
     }
 
-    public function deleteIten($id_order, $id_iten)
+    public function deleteIten($order_id, $iten_id)
     {
-        $iten = Iten::findOrFail($id_iten);
-        $order = Order::findOrFail($id_order);
+        $iten = Iten::findOrFail($iten_id);
+        $order = Order::findOrFail($order_id);
 
         $result = $order->itens()->delete($iten);
 
@@ -72,18 +72,18 @@ class OrderRepository
         return response()->json($result, 201);
     }
 
-    public function start($id_order)
+    public function start($order_id)
     {
-        $order = Order::findOrFail($id_order);
+        $order = Order::findOrFail($order_id);
         $order->status = 'A';
         $result = $order->save();
 
         return response()->json($result, 201);
     }
 
-    public function finish($id_order)
+    public function finish($order_id)
     {
-        $order = Order::findOrFail($id_order);
+        $order = Order::findOrFail($order_id);
         $order->status = 'F';
         $result = $order->save();
 
@@ -93,8 +93,8 @@ class OrderRepository
     public function getAllPerEmployee()
     {
         $order = Order::select('*')
-                        ->where('id_waiter', '=', $this->getUserAuth()->id())
-                        ->orwhere('id_chef', '=', $this->getUserAuth()->id())
+                        ->where('waiter_id', '=', $this->getUserAuth()->id())
+                        ->orwhere('chef_id', '=', $this->getUserAuth()->id())
                         ->get();
         return response()->json($order, 200);
     }
@@ -115,11 +115,11 @@ class OrderRepository
         return response()->json($orders, 200);
     }
 
-    public function getBiggestOrder($id_customer)
+    public function getBiggestOrder($customer_id)
     {
         $order = Order::select('orders.*')
-                        ->join('customers', 'customers.id', '=', 'orders.id_customer')
-                        ->where('id_customer', $id_customer)
+                        ->join('customers', 'customers.id', '=', 'orders.customer_id')
+                        ->where('customer_id', $customer_id)
                         ->orderby('order.total', 'desc')
                         ->limit(1)
                         ->get();
@@ -127,11 +127,11 @@ class OrderRepository
         return response()->json($order, 200);
     }
     
-    public function getSmallestOrder($id_customer)
+    public function getSmallestOrder($customer_id)
     {
         $order = Order::select('orders.*')
-                        ->join('customers', 'customers.id', '=', 'orders.id_customer')
-                        ->where('id_customer', $id_customer)
+                        ->join('customers', 'customers.id', '=', 'orders.customer_id')
+                        ->where('customer_id', $customer_id)
                         ->orderby('order.total', 'cresc')
                         ->limit(1)
                         ->get();
@@ -140,11 +140,11 @@ class OrderRepository
     }
 
     
-    public function getFirstOrder($id_customer)
+    public function getFirstOrder($customer_id)
     {
         $order = Order::select('orders.*')
-                        ->join('customers', 'customers.id', '=', 'orders.id_customer')
-                        ->where('id_customer', $id_customer)
+                        ->join('customers', 'customers.id', '=', 'orders.customer_id')
+                        ->where('customer_id', $customer_id)
                         ->orderby('created_at', 'cresc')
                         ->limit(1)
                         ->get();
@@ -152,11 +152,11 @@ class OrderRepository
         return response()->json($order, 200);
     }
 
-    public function getLastOrder($id_customer)
+    public function getLastOrder($customer_id)
     {
         $order = Order::select('orders.*')
-                        ->join('customers', 'customers.id', '=', 'orders.id_customer')
-                        ->where('id_customer', $id_customer)
+                        ->join('customers', 'customers.id', '=', 'orders.customer_id')
+                        ->where('customer_id', $customer_id)
                         ->orderby('created_at', 'desc')
                         ->limit(1)
                         ->get();
@@ -164,20 +164,20 @@ class OrderRepository
         return response()->json($order, 200);
     }
 
-    public function getAllPerCustomer($id_customer)
+    public function getAllPerCustomer($customer_id)
     {
         $orders = Order::select('orders.*')
-                        ->join('customers', 'customers.id', '=', 'orders.id_customer')
-                        ->where('id_customer', $id_customer)
+                        ->join('customers', 'customers.id', '=', 'orders.customer_id')
+                        ->where('customer_id', $customer_id)
                         ->get();
         return response()->json($orders, 200);
     }
 
-    public function getAllPerTable($id_table)
+    public function getAllPerTable($table_id)
     {
         $orders = Order::select('orders.*')
-                        ->join('tables', 'tables.id', '=', 'orders.id_table')
-                        ->where('id_table', $id_table)
+                        ->join('tables', 'tables.id', '=', 'orders.table_id')
+                        ->where('table_id', $table_id)
                         ->get();
         return response()->json($orders, 200);
     }

@@ -22,9 +22,9 @@ class MenuController extends Controller
         return MenuResource::collection($this->repository->getAllMenus());
     }
 
-    public function read($id)
+    public function read($menu_id)
     {
-        return new MenuResource($this->repository->getMenu($id));
+        return new MenuResource($this->repository->getMenu($menu_id));
     }
 
     public function create(StoreMenuRequest $request)
@@ -37,12 +37,12 @@ class MenuController extends Controller
 
     public function update(StoreMenuRequest $request)
     {
-        $this->repository->update($request);
+        return MenuResource::collection($this->repository->update($request));
     }
 
     public function delete(StoreMenuRequest $request)
     {
-        $this->repository->delete($request->id);
+        return $this->repository->delete($request->id);
     }
     
 

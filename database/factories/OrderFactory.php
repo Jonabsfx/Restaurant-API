@@ -21,9 +21,9 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            'id_waiter' => Waiter::factory(),
-            'id_customer' => Customer::factory(),
-            'id_table' => Table::factory(),
+            'waiter_id' => Waiter::factory(),
+            'customer_id' => Customer::factory(),
+            'table_id' => Table::factory(),
         ];
     }
 }

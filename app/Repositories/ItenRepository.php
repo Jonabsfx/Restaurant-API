@@ -15,19 +15,20 @@ class ItenRepository
         $this->entity = $model;
     }
 
-    public function getItensPerMenu($id_menu)
+    public function getItensPerMenu($menu_id)
     {
-        $itens = Menu::select('*')
-                        ->where('id_menu', $id_menu)
+        return  $this->entity
+                        ->where('menu_id', $menu_id)
                         ->get();
+      
 
-        return response($itens, 200);
+     //   return response()->json($itens, 201);
     }
     
-    public function createNewMenu(StoreItenRequest $request, $id_menu)
+    public function createNewIten(StoreItenRequest $request, $menu_id)
     {
         $data = $request->validate();
-        $menu = Menu::findOrFail($id_menu);
+        $menu = Menu::findOrFail($menu_id);
 
         $iten = $menu->itens()
                     ->create([
@@ -50,8 +51,12 @@ class ItenRepository
 
     public function delete($id)
     {
-        $Iten = Iten::findOrFail($id);
-        $Iten->delete();
+      
+   
+      $iten = Iten::findOrFail($id);
+      $result = $iten->delete();
+
+        return response()->json($result, 201);
     }
     
 

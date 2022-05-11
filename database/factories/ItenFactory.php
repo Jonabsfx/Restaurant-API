@@ -16,9 +16,9 @@ class ItenFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'value' => $this->faker->decimal(),
-            'id_menu' => Menu::factory(),
+            'name' => $this->faker->word(),
+            'value' => $this->faker->randomFloat(),
+            'menu_id' => Menu::factory(),
         ];
     }
 }

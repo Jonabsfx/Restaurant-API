@@ -22,9 +22,9 @@ class CustomerController extends Controller
         return CustomerResource::collection($this->repository->getAllCustomers());
     }
 
-    public function read($id)
+    public function read($customer_id)
     {
-        return new CustomerResource($this->repository->getCustomer($id));
+        return new CustomerResource($this->repository->getCustomer($customer_id));
     }
 
     public function create(StoreCustomerRequest $request)
@@ -38,12 +38,12 @@ class CustomerController extends Controller
 
     public function update(StoreCustomerRequest $request)
     {
-        $this->repository->update($request);
+       return CustomerResource::collection($this->repository->update($request));
     }
 
     public function delete(StoreCustomerRequest $request)
     {
-        $this->repository->update($request->id);
+       return $this->repository->update($request->id);
     }
 
     

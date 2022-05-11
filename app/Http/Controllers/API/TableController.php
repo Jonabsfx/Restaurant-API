@@ -24,7 +24,7 @@ class TableController extends Controller
 
     public function read($id)
     {
-        return new TableResource($this->repository->getTable($id));
+        return TableResource::collection($this->repository->getTable($id));
     }
 
     public function create(StoreTableRequest $request)
@@ -34,7 +34,17 @@ class TableController extends Controller
 
         return new TableResource($table);
     }
- 
+    
+    
+    public function update(StoreTableRequest $request)
+    {
+        return TableResource::collection($this->repository->update($request));
+    }
+
+    public function delete(StoreTableRequest $request)
+    {
+        return $this->repository->delete($request->id);
+    }
 
     
 }
