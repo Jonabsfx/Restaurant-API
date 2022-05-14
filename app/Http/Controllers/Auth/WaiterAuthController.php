@@ -9,15 +9,17 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Waiter;
+use App\Http\Resources\WaiterResource;
 
 class WaiterAuthController extends AuthController
 {
     public function login(AuthRequest $request)
     {
+        $waiter = Waiter::select('*')
+                            ->where('login', $request->login)
+                            ->first();
 
-        $waiter = Waiter::were('login', $request->login)->first();
-
-        if (!$waiter ||!Hash::check($request->password, $waiter->snha)) {
+        if (!$waiter ||$request->password != $waiter->password) {
             throw ValidationException::withMessages([
                 'login' => ['Login ou password incorretos'],
             ]);
@@ -28,4 +30,12 @@ class WaiterAuthController extends AuthController
             'token' => $waiter->createToken($request->device_name, ['role:waiter'])->plainTextToken
         ]);
     }
+
+    public function me()
+    {
+        $waiter = auth()->user();
+
+        return new WaiterResource($waiter);
+    }
+
 }

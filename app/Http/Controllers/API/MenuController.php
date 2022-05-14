@@ -35,14 +35,16 @@ class MenuController extends Controller
         return new MenuResource($menu);
     }
 
-    public function update(StoreMenuRequest $request)
+    public function update(StoreMenuRequest $request, $menu_id)
     {
-        return MenuResource::collection($this->repository->update($request));
-    }
+        $newName = $request->name;
 
-    public function delete(StoreMenuRequest $request)
-    {
-        return $this->repository->delete($request->id);
+        return new MenuResource($this->repository->update($newName, $menu_id));
+    }
+ 
+    public function delete($menu_id)
+    { 
+       return $this->repository->delete($menu_id);
     }
     
 

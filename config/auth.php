@@ -42,12 +42,12 @@ return [
             'provider' => 'users',
         ],
         
-        'garcons' => [
+        'waiter' => [
             'driver' => 'sanctum',
-            'provider' => 'garcons',
+            'provider' => 'waiters',
         ],
     
-        'chefs' => [
+        'chef' => [
             'driver' => 'sanctum',
             'provider' => 'chefs',
         ],
@@ -76,7 +76,7 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'garcons' => [
+        'waiters' => [
             'driver' => 'eloquent',
             'model' => App\Models\Waiter::class,
          ],

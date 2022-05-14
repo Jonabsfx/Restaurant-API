@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\AuthRequest;
-use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Chef;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\ChefResource;
 
 class ChefAuthController extends AuthController
 {
@@ -27,5 +27,12 @@ class ChefAuthController extends AuthController
             'chef' => $chef,
             'token' => $chef->createToken($request->device_name, ['role:chef'])->plainTextToken
         ]);
+    }
+
+    public function me()
+    {
+        $chef = auth()->user();
+
+        return new ChefResource($chef);
     }
 }

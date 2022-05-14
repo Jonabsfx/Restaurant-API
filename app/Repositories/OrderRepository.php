@@ -6,6 +6,9 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
 use App\Repositories\Traits\RepositoryTrait;
 use App\Models\Iten;
+use App\Models\Waiter;
+use App\Models\User;
+use Illuminate\Foundation\Http\Request;
 
 class OrderRepository
 {
@@ -17,17 +20,17 @@ class OrderRepository
         $this->entity = $model;
     }
 
-    public function createNewOrder(array $data)
+    public function createNewOrder(StoreOrderRequest $request)
     {
-        $order = $this->getUserAuth()
+        $data = $request->validated();
+        var_dump($data);
+        exit();
+        
+        $order = $this->getWaiterAuth()
                       ->orders()
-                      ->create([
-                        'table_id' => $data['table_id'],
-                        'customer_id' => $data['customer_id'],
-                        'total' => $data['total'],
-                      ]);
+                      ->create([$data]);
 
-        return response()->json($order, 201);
+      // return $order;
     }
 
     public function addIten($order_id, $iten_id)
@@ -93,8 +96,8 @@ class OrderRepository
     public function getAllPerEmployee()
     {
         $order = Order::select('*')
-                        ->where('waiter_id', '=', $this->getUserAuth()->id())
-                        ->orwhere('chef_id', '=', $this->getUserAuth()->id())
+                        ->where('waiter_id', '=', $this->getWaiterAuth()->id())
+                        ->orwhere('chef_id', '=', $this->getChefAuth()->id())
                         ->get();
         return response()->json($order, 200);
     }

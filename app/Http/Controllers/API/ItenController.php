@@ -24,15 +24,15 @@ class ItenController extends Controller
 
     public function create(StoreItenRequest $request, $menu_id)
     {
-         $menu = $this->repository
+         $iten = $this->repository
                          ->createNewIten($request, $menu_id);
 
-        return new ItenResource($menu);
+        return new ItenResource($iten);
     }
 
-    public function update(StoreItenRequest $request)
+    public function update($iten_id,StoreItenRequest $request)
     {
-        return ItenResource::collection($this->repository->update($request));
+        return ItenResource::collection($this->repository->update($iten_id,$request));
     }
 
     public function delete($menu_id, $iten_id)

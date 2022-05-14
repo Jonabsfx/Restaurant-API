@@ -26,25 +26,25 @@ class MenuRepository
     
     public function createNewMenu(StoreMenuRequest $request)
     {
-        $data = $request->validate();
+        $data = $request->validated();
 
         $menuModel = app(Menu::class);
         $menu = $menuModel->create($data);
-        return response()->json($menu, 201);
+        return $menu;
     }
 
-    public function update(StoreMenuRequest $request){
+    public function update(string $newName, $menu_id){
 
-        $menu = Menu::findOrFail($request->id); 
-        $menu->name = $request->name;
+        $menu = Menu::findOrFail($menu_id); 
+        $menu->name = $newName;
         $menu->save();
 
-        return response()->json($menu, 201);
+        return $menu;
     }
 
-    public function delete($id)
+    public function delete($menu_id)
     {
-        $menu = Menu::findOrFail($id);
+        $menu = Menu::findOrFail($menu_id);
         $result = $menu->delete();
 
         return response()->json($result, 200);

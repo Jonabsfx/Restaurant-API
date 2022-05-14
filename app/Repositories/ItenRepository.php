@@ -27,7 +27,7 @@ class ItenRepository
     
     public function createNewIten(StoreItenRequest $request, $menu_id)
     {
-        $data = $request->validate();
+        $data = $request->validated();
         $menu = Menu::findOrFail($menu_id);
 
         $iten = $menu->itens()
@@ -37,23 +37,21 @@ class ItenRepository
                     ]);
 
 
-        return response()->json($iten, 201);
+        return $iten;
     }
 
-    public function update(StoreItenRequest $request){
+    public function update($iten_id,StoreItenRequest $request){
 
-        $Iten = Iten::findOrFail($request->id); 
+        $Iten = Iten::findOrFail($iten_id); 
         $Iten->name = $request->name;
         $Iten->save();
 
         return response()->json($Iten, 201);
     }
 
-    public function delete($id)
+    public function delete($iten_id)
     {
-      
-   
-      $iten = Iten::findOrFail($id);
+      $iten = Iten::findOrFail($iten_id);
       $result = $iten->delete();
 
         return response()->json($result, 201);

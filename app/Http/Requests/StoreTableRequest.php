@@ -24,7 +24,7 @@ class StoreTableRequest extends FormRequest
     public function rules()
     {
         return [
-            'number' => 'required'
+            'number' => 'required|numeric|unique:tables,number'
         ];
     }
 
@@ -32,6 +32,7 @@ class StoreTableRequest extends FormRequest
     {
         return [
             'number.required' => 'Número da mesa é obrigatório',
+            'number.unique' => 'Mesa já existente'
         ];
         
     }

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Table;
 use App\Http\Requests\StoreTableRequest;
+use App\Models\Order;
 
 class TableRepository
 {
@@ -16,29 +17,32 @@ class TableRepository
 
     public function getAllTables()
     {
-        return $this->entity->with('orders')->get();
+        return $this->entity->get();
     }
 
     public function getTable(string $identify)
     {
-        return $this->entity->with('orders')->findOrFail($identify);
+        return $this->entity->findOrFail($identify);
     }
     
     public function createNewTable(StoreTableRequest $request)
     {
         $data = $request->validated();
-        $tableModel = app(Table::class);
-        $table = $tableModel->create($data);
-        return response()->json($table, 201);
+        $table = $this->entity
+                            ->create([
+                                'number' => $data['number'],
+                            ]);
+        return $table;
     }
 
-    public function update(StoreTableRequest $request){
+    public function update(StoreTableRequest $request, $table_id){
+        $data = $request->validated();
 
-        $table = Table::findOrFail($request->id); 
-        $table->name = $request->name;
+        $table = Table::findOrFail($table_id); 
+        $table->number = $data['number'];
         $table->save();
 
-        return response()->json($table, 201);
+        return $table;
     }
 
     public function delete($id)

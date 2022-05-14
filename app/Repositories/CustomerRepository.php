@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
+use Illuminate\Http\Request;
 
 class CustomerRepository
 {
@@ -28,12 +29,15 @@ class CustomerRepository
     {
         $data = $request->validated();
 
-        if(CustomerRepository::validaCPF($data->cpf))
+        if($this->validaCPF($data["cpf"]))
         {
+        $customer = $this->entity
+                            ->create([
+                                'name' => $data['name'],
+                                'cpf' => $data['cpf'],
+                            ]);
 
-        $customerModel = app(Customer::class);
-        $customer = $customerModel->create($data);
-        return response()->json($$customer, 201);
+       return $customer;
 
         }
 
@@ -43,16 +47,15 @@ class CustomerRepository
         }
     }
 
-    public function update(StoreCustomerRequest $request){
+    public function update($customer_id, string $newName){
 
-        $customer = Customer::findOrFail($request->id); 
-        $customer->name = $request->name;
-        $customer->cpf = $request->cpf;
 
-        if(CustomerRepository::validaCPF($customer->cpf))
-            return response()->json($customer, 201);
-         else
-            return response()->json(400);   
+        $customer = Customer::findOrFail($customer_id); 
+        $customer->name = $newName;
+        $customer->save();
+
+       return $customer;
+ 
     }
 
     public function delete($id)
@@ -62,7 +65,8 @@ class CustomerRepository
         return response()->json(204);
     }
 
-    private function validaCPF($cpf) {
+    private function validaCPF($cpf) 
+    {
  
         // Extrai somente os números
         $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
@@ -90,4 +94,5 @@ class CustomerRepository
         return true;
     
     }
+
 }

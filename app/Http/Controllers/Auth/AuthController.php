@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Resources\EmployeeResource;
 
 class AuthController extends Controller
 {
@@ -20,10 +19,4 @@ class AuthController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function me()
-    {
-        $employee = auth()->user();
-
-        return new EmployeeResource($employee);
-    }
 }

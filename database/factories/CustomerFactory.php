@@ -16,7 +16,7 @@ class CustomerFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'cpf' => $this->faker->cpf(),
+            'cpf' => $this->faker->unique()->cpf(false),
         ];
     }
 }

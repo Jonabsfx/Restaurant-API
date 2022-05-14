@@ -4,9 +4,14 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
-class WaiterMiddleware
-{
+
+class WaiterMiddleware extends Middleware
+{ 
+    use HasApiTokens;
     /**
      * Handle an incoming request.
      *
@@ -14,13 +19,4 @@ class WaiterMiddleware
      * @param \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
-        if (auth()->user()->tokenCan('role:waiter')) {
-            return $next($request);
-        }
-
-        return response()->json('Not Authorized', 401);
-
-    }
 }

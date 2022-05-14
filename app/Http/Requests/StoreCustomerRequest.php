@@ -25,7 +25,7 @@ class StoreCustomerRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'cpf' => 'required|max:11'
+            'cpf' => 'required|max:11|unique:customers,cpf'
         ];
     }
 
@@ -33,7 +33,8 @@ class StoreCustomerRequest extends FormRequest
     {
         return [
             'name.required' => 'Nome do cliente é obrigatório',
-            'cpf.required' => 'CPF é obrigatório'
+            'cpf.required' => 'CPF é obrigatório',
+            'cpf.unique' => 'CPF já existente!',
         ];
         
     }

@@ -4,9 +4,9 @@ use App\Http\Controllers\API\
 {
     CustomerController,
     MenuController,
-    OrderController,
     TableController,
-    ItenController
+    ItenController,
+    OrderController
 };
 use App\Http\Controllers\Auth\{
     AuthController,
@@ -17,13 +17,13 @@ use App\Http\Controllers\Auth\{
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+Route::post('/criar-pedido', [OrderController::class, 'create']);
+
 /**
  * Autenticação
  */
 Route::post('/login-waiter', [WaiterAuthController::class, 'login']);
 Route::post('/login-chef', [ChefAuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 
 /**
  * Resetar a Senha
@@ -41,23 +41,23 @@ Route::prefix('/cardapio')->group(function () {
     Route::post('/cadastro', [MenuController::class, 'create']);
     Route::get('/{menu_id}/show', [MenuController::class, 'read']);
     Route::put('/{menu_id}/update',[MenuController::class, 'update']);
-    Route::delete('/{menu_id]/delete', [MenuController::class, 'delete']);
+    Route::delete('/{menu_id}/delete', [MenuController::class, 'delete']);
 });
 
 /**
  * CRUD dos Itens
  */
 Route::prefix('/cardapio/{menu_id}')->group(function () {
-    Route::post('/cadastro-item', [ItenController::class, 'create']);
+    Route::post('/cadastro', [ItenController::class, 'create']);
     Route::get('/lista-itens', [ItenController::class, 'read']);
     Route::put('/{iten_id}/update-item',[ItenController::class, 'update']);
     Route::delete('/{iten_id}/deletar-item', [ItenController::class, 'delete']);
-});
+}); 
 
 /**
  * CRUD da Mesa
  */
-Route::prefix('/table')->group(function () {
+Route::prefix('/mesa')->group(function () {
 
     Route::get('/lista', [TableController::class, 'index']);
     Route::post('/cadastro', [TableController::class, 'create']);
@@ -101,11 +101,17 @@ Route::get('/pedidos/lista-mes/{year}/{month}', [OrderController::class, 'getAll
 Route::get('/pedidos/lista-dia/{year}/{month}/{day}', [OrderController::class, 'getAllPerDay']);
 Route::get('/pedidos/lista-semana/{year}/{month}/{day}', [OrderController::class, 'getAllPerWeek']);
 
+
+
 // Rotas do Garçcom
-Route::middleware(['auth:sanctum', 'type.waiter'])->group(function () {
-    Route::post('criar-pedido', [OrderController::class, 'createNewOrder']);
+Route::middleware(['auth:waiter'])->group(function () {
     Route::get('lista-pedidos',[OrderController::class, 'getAllPerEmployee']);
+    Route::post('/{order_id}/adicionar-item/{iten_id}', [OrderController::class, 'addIten']);
     Route::get('lista-em-andamento', [OrderController::class, 'getAllOnGoing']);
+    
+
+    Route::post('/logout', [WaiterAuthController::class, 'logout']);
+    Route::get('/me', [WaiterAuthController::class, 'me']);
     
 });
 
@@ -116,6 +122,9 @@ Route::middleware(['auth:sanctum', 'type.chef'])->group(function () {
     Route::get('lista-a-fazer', [OrderController::class, 'getAllToDo']);
     Route::post('/{order_id}/iniciar-pedido', [OrderController::class, 'start']);
     Route::post('/{order_id}/finalizar-pedido', [OrderController::class, 'finish']);
+
+    Route::post('/logout', [ChefAuthController::class, 'logout']);
+    Route::get('/me', [ChefAuthController::class, 'me']);
     
 });
 

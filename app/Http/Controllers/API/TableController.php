@@ -22,9 +22,9 @@ class TableController extends Controller
         return TableResource::collection($this->repository->getAllTables());
     }
 
-    public function read($id)
+    public function read($table_id)
     {
-        return TableResource::collection($this->repository->getTable($id));
+        return new TableResource($this->repository->getTable($table_id));
     }
 
     public function create(StoreTableRequest $request)
@@ -35,16 +35,13 @@ class TableController extends Controller
         return new TableResource($table);
     }
     
-    
-    public function update(StoreTableRequest $request)
+    public function update(StoreTableRequest $request, $table_id)
     {
-        return TableResource::collection($this->repository->update($request));
+        return new TableResource($this->repository->update($request, $table_id));
     }
 
-    public function delete(StoreTableRequest $request)
+    public function delete($table_id)
     {
-        return $this->repository->delete($request->id);
+        return $this->repository->delete($table_id);
     }
-
-    
 }

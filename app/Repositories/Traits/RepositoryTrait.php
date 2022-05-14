@@ -2,12 +2,19 @@
 
 namespace App\Repositories\Traits;
 
-use App\Models\User;
+
+use App\Models\Waiter;
+use App\Models\Chef;
 
 trait RepositoryTrait
 {
-    private function getUserAuth(): User
+    private function getWaiterAuth(): Waiter
     {
-        return auth()->user();
+        return auth()->guard('waiter')->user();
+    }
+
+    private function getChefAuth(): Chef
+    {
+        return auth()->guard('chef')->user();
     }
 }

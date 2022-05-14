@@ -29,21 +29,26 @@ class CustomerController extends Controller
 
     public function create(StoreCustomerRequest $request)
     {
-         $customer = $this->repository
-                         ->createNewCustomer($request);
 
-        return new CustomerResource($customer);
+        $customer = $this->repository
+                       ->createNewCustomer($request);
+
+        return new CustomerResource($customer); 
     }
     
 
-    public function update(StoreCustomerRequest $request)
+    public function update($customer_id, Request $request)
     {
-       return CustomerResource::collection($this->repository->update($request));
+        $newName = $request->name;
+      
+        $customer = $this->repository->update($customer_id, $newName);
+ 
+        return new CustomerResource($customer); 
     }
 
-    public function delete(StoreCustomerRequest $request)
+    public function delete($customer_id)
     {
-       return $this->repository->update($request->id);
+       return $this->repository->delete($customer_id);
     }
 
     

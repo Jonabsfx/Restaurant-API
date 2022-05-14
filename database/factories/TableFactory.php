@@ -15,7 +15,7 @@ class TableFactory extends Factory
     public function definition()
     {
         return [
-            'number' => $this->faker->integer(),
+            'number' => $this->faker->unique()->randomNumber(3, false),
         ];
     }
 }

@@ -4,23 +4,11 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
-class ChefMiddleware
+class ChefMiddleware extends Middleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        if (auth()->user()->tokenCan('role:chef')) {
-            return $next($request);
-        }
-
-        return response()->json('Not Authorized', 401);
-
-    }
+    
 }

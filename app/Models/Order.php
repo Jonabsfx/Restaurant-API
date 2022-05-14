@@ -19,9 +19,9 @@ class Order extends Model
         'customer_id',
     ]; 
     
-    public function employee()
+    public function waiter()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Waiter::class);
     }
 
     public function table()

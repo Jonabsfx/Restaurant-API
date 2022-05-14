@@ -9,7 +9,6 @@ class Waiter extends User
 {
     use HasFactory;
 
-
     public function orders()
     {
         return $this->hasMany(Order::class);
