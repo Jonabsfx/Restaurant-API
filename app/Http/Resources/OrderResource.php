@@ -17,10 +17,11 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'status' => $this->status,
-            'waiter' => WaiterResource::collection($this->whenLoaded('waiter')),
-            'customer' => CustomerResource::collection($this->whenLoaded('customer')),
-            'table' => TableResource::collection($this->whenLoaded('table')),
-            'itens' => ItenResource::collection($this->whenLoaded('itens')),
+            'waiter' =>  new WaiterResource($this->waiter),
+            'customer' => new CustomerResource($this->customer),
+            'table' => new TableResource($this->table),
+            'itens' => ItenResource::collection($this->itens),
+            'total' => $this->total
         ];
     }
 }

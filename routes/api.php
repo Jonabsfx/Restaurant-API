@@ -8,21 +8,18 @@ use App\Http\Controllers\API\
     ItenController,
     OrderController
 };
-use App\Http\Controllers\Auth\{
-    AuthController,
+use App\Http\Controllers\Auth\{ 
     ResetPasswordController,
     ChefAuthController,
     WaiterAuthController,
 };
 use Illuminate\Support\Facades\Route;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
-Route::post('/criar-pedido', [OrderController::class, 'create']);
 
 /**
  * Autenticação
  */
-Route::post('/login-waiter', [WaiterAuthController::class, 'login']);
+Route::post('/login-waiter', [WaiterAuthController::class, 'login'])->name("login");
 Route::post('/login-chef', [ChefAuthController::class, 'login']);
 
 /**
@@ -48,7 +45,7 @@ Route::prefix('/cardapio')->group(function () {
  * CRUD dos Itens
  */
 Route::prefix('/cardapio/{menu_id}')->group(function () {
-    Route::post('/cadastro', [ItenController::class, 'create']);
+    Route::post('/cadastro-iten', [ItenController::class, 'create']);
     Route::get('/lista-itens', [ItenController::class, 'read']);
     Route::put('/{iten_id}/update-item',[ItenController::class, 'update']);
     Route::delete('/{iten_id}/deletar-item', [ItenController::class, 'delete']);
@@ -64,6 +61,7 @@ Route::prefix('/mesa')->group(function () {
     Route::get('/{table_id}/show', [TableController::class, 'read']);
     Route::put('/{table_id}/update',[TableController::class, 'update']);
     Route::delete('/{table_id}/delete', [TableController::class, 'delete']);
+
     Route::get('/{table_id}/lista-pedidos', [OrderController::class, 'getAllPerTable']);
 
 });
@@ -87,7 +85,7 @@ Route::prefix('/cliente')->group(function () {
 Route::prefix('/cliente/{customer_id}')->group(function () {
 
     Route::get('/maior-pedido', [OrderController::class, 'getBiggestOrder']);
-    Route::get('/menor-pedido', [OrderController::class, 'getSmallestOrder']);
+    Route::get('/menor-pedido', [OrderController::class, 'getLowestOrder']);
     Route::get('/primeiro-pedido', [OrderController::class, 'getFirstOrder']);
     Route::get('/ultimo-pedido', [OrderController::class, 'getLastOrder']);
     Route::get('/lista-pedidos', [OrderController::class, 'getAllPerCustomer']);
@@ -105,7 +103,8 @@ Route::get('/pedidos/lista-semana/{year}/{month}/{day}', [OrderController::class
 
 // Rotas do Garçcom
 Route::middleware(['auth:waiter'])->group(function () {
-    Route::get('lista-pedidos',[OrderController::class, 'getAllPerEmployee']);
+    Route::post('/criar-pedido', [OrderController::class, 'create']);
+    Route::get('/lista-pedidos',[OrderController::class, 'getAllPerEmployee']);
     Route::post('/{order_id}/adicionar-item/{iten_id}', [OrderController::class, 'addIten']);
     Route::get('lista-em-andamento', [OrderController::class, 'getAllOnGoing']);
     

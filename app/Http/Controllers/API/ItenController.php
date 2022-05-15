@@ -30,13 +30,13 @@ class ItenController extends Controller
         return new ItenResource($iten);
     }
 
-    public function update($iten_id,StoreItenRequest $request)
+    public function update($menu_id,$iten_id,StoreItenRequest $request)
     {
-        return ItenResource::collection($this->repository->update($iten_id,$request));
+        return new ItenResource($this->repository->update($iten_id,$request));
     }
 
     public function delete($menu_id, $iten_id)
     {
-        return ItenResource::collection($this->repository->delete($iten_id));
+        return $this->repository->delete($iten_id);
     }
 }

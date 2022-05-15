@@ -22,6 +22,13 @@ trait UtilsTrait
         return $token;
     }
 
+    public function getTokenWaiter(Waiter $waiter)
+    {
+        $token = $waiter->createToken('teste')->plainTextToken;
+
+        return $token;
+    }
+
     public function defaultHeaders()
     {
         $token = $this->createTokenWaiter();

@@ -23,7 +23,7 @@ class OrderFactory extends Factory
         return [
             'waiter_id' => Waiter::factory(),
             'customer_id' => Customer::factory(),
-            'table_id' => Table::factory(),
+            'table_id' => Table::select('*')->first(),
         ];
     }
 }

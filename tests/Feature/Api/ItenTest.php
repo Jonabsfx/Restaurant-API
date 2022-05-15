@@ -1,5 +1,5 @@
 <?php
-/*
+
 namespace Tests\Feature\Api;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,19 +11,20 @@ use App\Models\Menu;
 class ItenTest extends TestCase
 {
 
-    public function test_createCustomer()
+    public function test_createIten()
     {   
         $menu = Menu::factory()->create();
+        $iten = Iten::factory()->create();
 
-        $response = $this->postJson("/cardapio/{$menu->id}/cadastro-item",[
-                'name' => 'Baião de Dois',
-                'value' =>  25.50,
+        $response = $this->postJson("/cardapio/{$menu->id}/cadastro-iten",[
+                'name' => $iten->name,
+                'value' =>  $iten->value,
         ]);
 
         $response->assertStatus(201);
     }
 
-    public function test_getAllCustomer()
+    public function test_getAllIten()
     {   
         $menu = Menu::factory()->create();
         
@@ -31,13 +32,15 @@ class ItenTest extends TestCase
             'menu_id' => $menu->id,
         ]);
 
+        $count = $menu->itens()->count();
+
         $response = $this->getJson("/cardapio/{$menu->id}/lista-itens");
 
         $response->assertStatus(200)
-                    ->assertJsonCount(Iten::where('menu_id', '=', $menu->id)->count(), 'data');
+                    ->assertJsonCount($count, 'data');
     }
 
-    public function test_updateCustomer()
+    public function test_updateIten()
     {   
         $menu = Menu::factory()->create();
 
@@ -48,7 +51,7 @@ class ItenTest extends TestCase
             'menu_id' => $menu->id,
         ]);
 
-        $response = $this->putJson("/cliente/{$menu->id}/{$iten->id}/update",[
+        $response = $this->putJson("/cardapio/{$menu->id}/{$iten->id}/update-item",[
                                     'name' => $itenUp->name,
                                     'value' => $itenUp->value,
     ]);
@@ -56,13 +59,13 @@ class ItenTest extends TestCase
         $response->assertStatus(200); 
     }
 
-    public function test_deleteCustomer()
+    public function test_deleteIten()
     {
         $iten = Iten::select('*')
                     ->first();
 
-        $response = $this->deleteJson("/cardapio/{$iten->menu_id}/{$iten->id}/delete");
+        $response = $this->deleteJson("/cardapio/{$iten->menu_id}/{$iten->id}/deletar-item");
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
     }
-}*/
+}

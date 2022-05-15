@@ -20,7 +20,6 @@ class OrderController extends Controller
 
     public function create(StoreOrderRequest $request)
     {
-        dd($request);
         $order = $this->repository
                         ->createNewOrder($request);
 
@@ -30,7 +29,7 @@ class OrderController extends Controller
 
     public function update(StoreOrderRequest $request, $order_id)
     {
-       return OrderResource::collection($this->repository->update($request, $order_id));
+       return new OrderResource($this->repository->update($request, $order_id));
     }
 
     public function delete($order_id)
@@ -63,9 +62,9 @@ class OrderController extends Controller
         return OrderResource::collection($this->repository->getBiggestOrder($customer_id));
     }
 
-    public function getSmallestOrder($customer_id)
+    public function getLowestOrder($customer_id)
     {
-        return OrderResource::collection($this->repository->getSmallestOrder($customer_id));
+        return OrderResource::collection($this->repository->getLowestOrder($customer_id));
     }
 
     public function getFirstOrder($customer_id)
@@ -101,12 +100,12 @@ class OrderController extends Controller
 
     public function start($order_id)
     {
-        return OrderResource::collection($this->repository->start($order_id));
+        return new OrderResource($this->repository->start($order_id));
     }
     
     public function finish($order_id)
     {
-        return OrderResource::collection($this->repository->finish($order_id));
+        return new OrderResource($this->repository->finish($order_id));
     }
 
     public function addIten(StoreOrderRequest $request, $iten_id)

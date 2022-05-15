@@ -45,7 +45,7 @@ class MenuRepository
     public function delete($menu_id)
     {
         $menu = Menu::findOrFail($menu_id);
-        $result = $menu->delete();
+        $result = $menu->delete();  
 
         return response()->json($result, 200);
     }

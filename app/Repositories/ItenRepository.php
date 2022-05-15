@@ -20,14 +20,12 @@ class ItenRepository
         return  $this->entity
                         ->where('menu_id', $menu_id)
                         ->get();
-      
-
-     //   return response()->json($itens, 201);
     }
     
     public function createNewIten(StoreItenRequest $request, $menu_id)
     {
         $data = $request->validated();
+      
         $menu = Menu::findOrFail($menu_id);
 
         $iten = $menu->itens()
@@ -42,11 +40,11 @@ class ItenRepository
 
     public function update($iten_id,StoreItenRequest $request){
 
-        $Iten = Iten::findOrFail($iten_id); 
-        $Iten->name = $request->name;
-        $Iten->save();
+        $iten = Iten::findOrFail($iten_id); 
+        $iten->name = $request->name;
+        $iten->save();
 
-        return response()->json($Iten, 201);
+        return $iten;
     }
 
     public function delete($iten_id)
