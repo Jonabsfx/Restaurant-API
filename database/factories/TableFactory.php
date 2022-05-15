@@ -15,7 +15,7 @@ class TableFactory extends Factory
     public function definition()
     {
         return [
-            'number' => $this->faker->unique()->randomNumber(2, false),
+            'number' => $this->faker->unique(true)->numberBetween(1,100),
         ];
     }
 }
