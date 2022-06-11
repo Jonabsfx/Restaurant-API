@@ -1,14 +1,17 @@
 ### Instruções para testar o projeto
 
 ```bash
-# Clone este repositório
-$ git clone https://github.com/Jonabsfx/desafio-multiplier-back-end.git
+# Clone o projeto
+$ git clone https://github.com/Jonabsfx/restaurant-api.git
 
 # Vá para a pasta do projeto
-$ cd desafio-multiplier-back-end
+$ cd restaurant-api
 
-# Instale as dependências
+# Baixe todas as dependências do projeto
 $ composer install
+
+# Comece a aplicação Laravel
+$ php artisan key:generate
 
 # Edite os campos abaixo no seu arquivo .env para configurar a base de dados.
 
@@ -19,13 +22,18 @@ DB_DATABASE=desafio-api
 DB_USERNAME=root
 DB_PASSWORD=admin
 
-# Criar migrations
+# Baixe a imagem Docker
+$ docker push jonabsfx/api-restaurant:latest
+
+# Faça as migrations
 $ php artisan migrate
 
-# Criar seeders
+# O projeto já tem algumas seeders preparadas. Para utilizá-las:
 $ php artisan db:seed --class=DatabaseSeeder
 
 # Rodar os testes de integração
 $ php artisan test
+
+# Acesse servidor API na porta local 8000
 
 Obs: Para testar as rotas protegidas, a senha padrão é 1918, que foi não criptografada por motivos de praticidade do teste.
