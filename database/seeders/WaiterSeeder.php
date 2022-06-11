@@ -16,7 +16,7 @@ class WaiterSeeder extends Seeder
     public function run()
     {
         Waiter::factory()
-        ->count(10)
+        ->count(5)
         ->create();
     }
 }

@@ -16,7 +16,7 @@ class TableSeeder extends Seeder
     public function run()
     {
         Table::factory()
-        ->count(50)
+        ->count(5)
         ->create();
     }
 }

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\MOdels\Iten;
+use App\Models\Iten;
 
 class ItenSeeder extends Seeder
 {
@@ -16,7 +16,7 @@ class ItenSeeder extends Seeder
     public function run()
     {
         Iten::factory()
-        ->count(500)
+        ->count(50)
         ->create();
     }
 }

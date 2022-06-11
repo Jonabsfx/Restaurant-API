@@ -18,7 +18,7 @@ class ItenFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'value' => $this->faker->randomFloat(),
-            'menu_id' => Menu::factory(),
+            'menu_id' => Menu::select('id')->inRandomOrder()->first(),
         ];
     }
 }

@@ -21,9 +21,9 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            'waiter_id' => Waiter::factory(),
-            'customer_id' => Customer::factory(),
-            'table_id' => Table::select('*')->first(),
+            'waiter_id' => Waiter::select('id')->inRandomOrder()->first(),
+            'customer_id' => Customer::select('id')->inRandomOrder()->first(),
+            'table_id' => Table::select('id')->inRandomOrder()->first(),
         ];
     }
 }

@@ -14,8 +14,20 @@ class TableFactory extends Factory
     
     public function definition()
     {
-        return [
-            'number' => $this->faker->unique(true)->numberBetween(1,100),
-        ];
+       $number = $this->faker->unique()->numberBetween(1,100);
+       $model = Table::select('*')->where('number', '=', $number)->exists();
+    
+        if($model === false){
+            return [
+                'number' => $number
+            ];}
+        else{
+            $table = Table::factory()
+                     ->count(1)
+                     ->create();
+            return [
+                'number' => $table->number
+            ];
+        }
     }
 }
