@@ -46,16 +46,7 @@ services:
             - "3388:3306"
         networks: 
             - laravel
-
-    # db mongo
-    mongo:
-        container_name: jonabsfx-mongodb
-        image: mongo:latest
-        restart: unless-stopped
-        environment:
-            MONDO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
-            MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
-
+   
     # queue
     queue:
         container_name: jonabsfx-queue

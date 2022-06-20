@@ -1,4 +1,4 @@
-FROM jonabsfx:laravel-app:latest
+FROM php:latest
 WORKDIR /api-restaurant
 
 # Arguments defined in docker-compose.yml
